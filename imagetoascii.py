@@ -8,7 +8,9 @@ ASCII_CHARS = [' ', '.', '*', ':', 'o', '&', '8', '#', '@']
 ASCII_CHARS_LEN = len(ASCII_CHARS)
 
 def convert_image_to_ascii(image, columns=80):
-    image = image.resize((columns, columns), Image.ANTIALIAS)
+    aspect_ratio = image.size[1] / image.size[0]
+    rows = int(columns * aspect_ratio)
+    image = image.resize((columns, rows), Image.ANTIALIAS)
     pixels = image.load()
     ascii_art = []
     for i in range(image.size[1]):
@@ -21,4 +23,4 @@ def convert_image_to_ascii(image, columns=80):
     return '\n'.join(ascii_art)
 
 test = Image.open('testimage.webp')
-print(convert_image_to_ascii(test))
+print(convert_image_to_ascii(test, 75))
