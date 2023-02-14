@@ -8,8 +8,9 @@ ASCII_CHARS = [' ', '.', '*', ':', 'o', '&', '8', '#', '@']
 ASCII_CHARS_LEN = len(ASCII_CHARS)
 
 def convert_image_to_ascii(image, columns=80):
-    aspect_ratio = image.size[1] / image.size[0]
-    rows = int(columns * aspect_ratio)
+    orig_width, orig_height = image.size
+    aspect_ratio = orig_height / orig_width
+    rows = int(columns * aspect_ratio * 0.5) # Adjusted the aspect ratio by multiplying 0.5 to make the output closer to square
     image = image.resize((columns, rows), Image.ANTIALIAS)
     pixels = image.load()
     ascii_art = []
@@ -22,5 +23,5 @@ def convert_image_to_ascii(image, columns=80):
         ascii_art.append(''.join(row))
     return '\n'.join(ascii_art)
 
-test = Image.open('testimage.webp')
-print(convert_image_to_ascii(test, 75))
+test = Image.open('garf.jpg')
+print(convert_image_to_ascii(test, 120))
